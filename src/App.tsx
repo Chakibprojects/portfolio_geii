@@ -1,9 +1,9 @@
-import React, { useState, useEffect, Suspense } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Github, Linkedin, Mail, Download } from 'lucide-react';
-import Navbar from './components/Navbar.tsx';
-import ProjectModal from './components/ProjectModal.tsx';
-import LoadingScreen from './components/LoadingScreen.tsx';
+import Navbar from './components/Navbar';
+import ProjectModal from './components/ProjectModal';
+import LoadingScreen from './components/LoadingScreen';
 import { projects } from './data/projects';
 
 function App() {
@@ -27,9 +27,8 @@ function App() {
       
       {/* Hero Section */}
       <section className="relative h-screen">
-        <div className="absolute inset-0 z-0">
-          <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.59/build/spline-viewer.js"></script>
-          <spline-viewer url="https://prod.spline.design/zSzgzQlSTUXySidh/scene.splinecode" className="w-full h-full"></spline-viewer>
+        <div className="absolute inset-0 z-0 bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900">
+          <div className="absolute inset-0 bg-black/20"></div>
         </div>
         <div className="relative z-10 flex items-center justify-center h-full bg-gradient-to-b from-transparent to-[#0a0a0a]/90">
           <div className="text-center px-4">
@@ -65,12 +64,14 @@ function App() {
             <div className="md:w-2/3">
               <h2 className="text-3xl font-bold mb-6">À Propos</h2>
               <p className="text-gray-300 mb-6">
-                Passionné par la cybersécurité et les technologies émergentes, je suis un expert en sécurité informatique 
-                avec plus de 5 ans d'expérience dans la protection des systèmes critiques. Mon expertise couvre l'analyse 
-                des vulnérabilités, la réponse aux incidents, et l'implémentation de solutions de sécurité robustes.
+                Les systèmes embarqués sont omniprésents dans notre quotidien : ils équipent plus de 98 % des dispositifs électroniques modernes, des smartphones aux appareils médicaux en passant par les véhicules. Leur importance ne cesse de croître avec l'évolution technologique et la demande pour des produits de plus en plus intelligents et connectés.
                 <br /><br />
-                Spécialisé dans la sécurité des réseaux, la cryptographie moderne, et l'analyse forensique, j'aide les 
-                organisations à renforcer leur posture de sécurité face aux menaces évolutives du paysage numérique actuel.
+                C'est cette réalité qui m'a conduit à choisir un BUT GEII, spécialisé en électronique et systèmes embarqués. Cette formation me permet de développer des compétences en électronique, en informatique et en programmation, me dotant ainsi d'une expertise complète en hardware et software.
+                <br /><br />
+                Pendant ce cursus, j'ai eu l'opportunité de travailler sur divers projets, tant en équipe qu'en individuel. 
+                Par exemple, j'ai conçu un assistant domotique contrôlable à distance via un site web, et j'ai programmé un robot autonome en C avec une interface homme-machine (IHM) en C#.
+                <br /><br />
+                Si vous êtes un acteur dans les domaines de l'éléctronique et/ou de l'informatique à la recherche d'un stagiaire en 3ème année de BUT GEII, n'hésitez pas à me contacter.
               </p>
               <div className="flex gap-4">
                 <a href="https://www.linkedin.com/in/chakib-mallemm/" target="_blank" rel="noopener noreferrer" 
@@ -131,22 +132,16 @@ function App() {
             <div className="relative pl-8 border-l-2 border-emerald-500">
               {[
                 {
-                  title: "Senior Security Analyst",
-                  company: "CyberDefense Corp",
-                  period: "2021 - Présent",
-                  description: "Direction des initiatives de sécurité, analyse des menaces avancées et réponse aux incidents critiques."
+                  title: "Stage - Technicien électronique ",
+                  company: "CTV Électronique, Toulon",
+                  period: "2024",
+                  description: "Maintenance curative de divers systèmes électroniques en équipe"
                 },
                 {
-                  title: "Penetration Tester",
-                  company: "SecureNet Solutions",
-                  period: "2019 - 2021",
-                  description: "Tests d'intrusion sur applications web et infrastructures, évaluation des vulnérabilités."
-                },
-                {
-                  title: "Junior Security Engineer",
-                  company: "TechGuard Inc",
-                  period: "2018 - 2019",
-                  description: "Implémentation de solutions de sécurité et monitoring des systèmes critiques."
+                  title: "Stage de découverte - Employé de rayon",
+                  company: "Casino, La Valette-du-Var",
+                  period: "2018",
+                  description: "Mise en rayon"
                 }
               ].map((exp, index) => (
                 <div key={index} className="mb-12 relative">
@@ -180,16 +175,16 @@ function App() {
             <div className="relative pl-8 border-l-2 border-blue-500">
               {[
                 {
-                  title: "Master en Cybersécurité",
-                  school: "École Supérieure d'Informatique",
-                  period: "2016 - 2018",
-                  description: "Spécialisation en sécurité des réseaux et cryptographie avancée"
+                  title: "B.U.T Génie Électrique et Informatique Industrielle",
+                  school: "Université de Toulon",
+                  period: "2022 - ",
+                  description: "Spécialisation en Électronique et Systèmes Embarqués"
                 },
                 {
-                  title: "Licence Informatique",
-                  school: "Université de Technologie",
-                  period: "2013 - 2016",
-                  description: "Formation complète en informatique avec focus sur la sécurité"
+                  title: "Baccalauréat général, mention Bien",
+                  school: "Lycée Techniques Rouvière, Toulon",
+                  period: "2022",
+                  description: "Spécialités Mathématiques et Physique-Chimie, option euro-anglais"
                 }
               ].map((edu, index) => (
                 <div key={index} className="mb-12 relative">
@@ -209,7 +204,7 @@ function App() {
         </div>
       </section>
 
-      {/* Contact Section - Simplified */}
+      {/* Contact Section */}
       <section id="contact" className="py-12 px-4">
         <div className="max-w-xl mx-auto">
           <h2 className="text-3xl font-bold mb-8 text-center">Contact</h2>
