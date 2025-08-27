@@ -1,13 +1,200 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Github, Linkedin, Mail, Download } from 'lucide-react';
-import Navbar from './components/Navbar';
-import ProjectModal from './components/ProjectModal';
-import LoadingScreen from './components/LoadingScreen';
-import { projects } from './data/projects';
+import { Github, Linkedin, Mail, Download, X } from 'lucide-react';
 
+// Types
+interface Project {
+  title: string;
+  description: string;
+  thumbnail: string;
+  images: string[];
+}
+
+// Projects data
+const projects: Project[] = [
+  {
+    title: "PCB SmartLight",
+    description: `Développement d'un prototype de carte électronique avec dossier de fabrication, intégrant une analyse fonctionnelle et technique. 
+Le projet inclut le pilotage automatique et manuel, permettant le contrôle de l'éclairage en fonction de la luminosité ambiante ou via une télécommande infrarouge, 
+avec ajustement de l'intensité et de la couleur pour les LEDs RGB. 
+
+
+- Auto-évaluation : 50 %`,
+    thumbnail: "https://raw.githubusercontent.com/NexusAILab/cdn2/main/media/cee1b55fe4ee4982812f09c1de7ae1d6.png",
+    images: [
+      "https://raw.githubusercontent.com/NexusAILab/cdn2/main/media/cee1b55fe4ee4982812f09c1de7ae1d6.png"
+    ]
+  },
+  {
+    title: "Assistant Domotique",
+    description: `Création d'un assistant domotique alimenté par un ESP32, intégrant divers capteurs (température, gaz, lumière), un écran tactile, un lecteur RFID et un relais. Le système est programmé à l'aide de l'IDE Arduino, permettant la visualisation des données des capteurs et le contrôle du relais depuis l'écran tactile ainsi que via une interface web développée en HTML, CSS et JavaScript. Un programme de test et une procédure détaillée ont également été élaborés pour assurer la maintenance et le bon fonctionnement du système. En parallèle, vérification et mise en service d'un système domotique sur une maquette dédiée, incluant des contrôles hors tension et des tests sous tension pour garantir la sécurité et l'efficacité du système. 
+
+    
+    - Auto-évaluation : 85 %`,
+    thumbnail: "https://images.unsplash.com/photo-1558002038-1055907df827?auto=format&fit=crop&q=80",
+    images: [
+      "https://images.unsplash.com/photo-1558002038-1055907df827?auto=format&fit=crop&q=80"
+    ]
+  }
+];
+
+// Loading Screen Component
+const LoadingScreen = () => {
+  return (
+    <motion.div 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 bg-black z-50 flex items-center justify-center"
+    >
+      <div className="relative">
+        <motion.div 
+          animate={{ 
+            rotate: 360,
+            borderColor: ['#3B82F6', '#10B981', '#3B82F6'],
+          }}
+          transition={{ 
+            duration: 2,
+            repeat: Infinity,
+            ease: "linear"
+          }}
+          className="w-32 h-32 rounded-full border-4 border-blue-500"
+        />
+        <motion.div 
+          animate={{ 
+            scale: [1, 1.2, 1],
+            opacity: [1, 0.5, 1]
+          }}
+          transition={{ 
+            duration: 2,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+          className="absolute inset-0 flex items-center justify-center"
+        >
+          <div className="text-center">
+            <span className="font-mono text-sm text-green-400">Loading...</span>
+            <div className="mt-2 space-y-1">
+              {[...Array(3)].map((_, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ width: 0 }}
+                  animate={{ width: "100%" }}
+                  transition={{
+                    duration: 0.5,
+                    delay: i * 0.2,
+                    repeat: Infinity,
+                    repeatDelay: 1.5
+                  }}
+                  className="h-0.5 bg-green-400"
+                />
+              ))}
+            </div>
+          </div>
+        </motion.div>
+      </div>
+    </motion.div>
+  );
+};
+
+// Navbar Component
+const Navbar = () => {
+  return (
+    <motion.nav 
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      className="fixed top-0 left-0 right-0 z-50 bg-black/50 backdrop-blur-lg"
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16">
+          <div className="flex-shrink-0">
+            <a href="#" className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-green-400">
+              𝓒
+            </a>
+          </div>
+          <div className="hidden md:block">
+            <div className="ml-10 flex items-baseline space-x-8">
+              <a href="#about" className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                À Propos
+              </a>
+              <a href="#projects" className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                Projets
+              </a>
+              <a href="#experience" className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                Expérience
+              </a>
+              <a 
+                href="#contact"
+                className="bg-gradient-to-r from-blue-500 to-green-400 text-white px-4 py-2 rounded-md text-sm font-medium hover:opacity-90 transition-opacity"
+              >
+                Contact
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </motion.nav>
+  );
+};
+
+// Project Modal Component
+const ProjectModal = ({ project, onClose }: { project: Project; onClose: () => void }) => {
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      onClick={onClose}
+      className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4"
+    >
+      <motion.div
+        initial={{ scale: 0.9, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        exit={{ scale: 0.9, opacity: 0 }}
+        onClick={(e) => e.stopPropagation()}
+        className="bg-gray-900 rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto"
+      >
+        <div className="p-6">
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-2xl font-bold">{project.title}</h2>
+            <button
+              onClick={onClose}
+              className="p-2 hover:bg-gray-800 rounded-full transition-colors"
+            >
+              <X className="w-6 h-6" />
+            </button>
+          </div>
+          
+          <div className="space-y-6">
+            <div className="aspect-video bg-gray-800 rounded-lg overflow-hidden">
+              <img 
+                src={project.images[0]} 
+                alt={project.title}
+                className="w-full h-full object-cover"
+              />
+            </div>
+            
+            <p className="text-gray-300 whitespace-pre-line">{project.description}</p>
+            
+            {project.images[1] && (
+              <div className="aspect-video bg-gray-800 rounded-lg overflow-hidden">
+                <img 
+                  src={project.images[1]} 
+                  alt={project.title}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            )}
+          </div>
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+};
+
+// Main App Component
 function App() {
-  const [selectedProject, setSelectedProject] = useState<any>(null);
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
