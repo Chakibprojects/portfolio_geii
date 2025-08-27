@@ -1,13 +1,13 @@
 import React, { useState, useEffect, Suspense } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Github, Linkedin, Mail, Download } from 'lucide-react';
-import Navbar from './components/Navbar';
-import ProjectModal from './components/ProjectModal';
-import LoadingScreen from './components/LoadingScreen';
+import Navbar from './components/Navbar.tsx';
+import ProjectModal from './components/ProjectModal.tsx';
+import LoadingScreen from './components/LoadingScreen.tsx';
 import { projects } from './data/projects';
 
 function App() {
-  const [selectedProject, setSelectedProject] = useState(null);
+  const [selectedProject, setSelectedProject] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
