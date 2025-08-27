@@ -21,6 +21,25 @@
             À la frontière de la technologie et de la sécurité,
             <br />découvrez mon univers
           </motion.h1>
+            <div className="md:w-2/3">
+              <h2 className="text-3xl font-bold mb-6">À Propos</h2>
+              <div className="text-gray-300 mb-6 space-y-4">
+                <p>
+                  L'informatique est le moteur de la transformation numérique, un domaine en constante évolution qui façonne l'avenir de tous les secteurs, de l'industrie à la santé en passant par les communications.
+                </p>
+                <p>
+                  Mon ambition ? Devenir un ingénieur en informatique capable de concevoir des solutions innovantes, performantes et impactantes pour répondre aux défis technologiques de demain.
+                </p>
+                <p>
+                  Diplômé d'un DUT Génie Électrique et Informatique Industrielle (GEII), j'ai acquis une expertise solide en développement logiciel, programmation et systèmes embarqués, combinant à la fois des compétences techniques pointues et une vision globale des systèmes. Cette double compétence me permet de comprendre et de créer des solutions techniques complètes, à la fois robustes et innovantes.
+                </p>
+                <p>
+                  Aujourd'hui, je me spécialise dans l'ingénierie informatique, avec un intérêt marqué pour les systèmes intelligents, l'intelligence artificielle et les technologies de pointe. Mon objectif est de contribuer à des projets ambitieux qui repoussent les limites de la technologie, tout en continuant à développer mes compétences techniques et humaines.
+                </p>
+                <p className="font-medium text-blue-400">
+                  Si vous recherchez un alternant motivé, curieux et prêt à relever des défis techniques, n'hésitez pas à me contacter !
+                </p>
+              </div>
                  <div className="p-6">
                    <h3 className="text-xl font-bold mb-2">{project.title}</h3>
                    <p className="text-gray-400 line-clamp-2">{project.description}</p>
